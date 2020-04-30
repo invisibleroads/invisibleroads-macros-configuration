@@ -1,5 +1,8 @@
 from invisibleroads_macros_log import get_log
+from invisibleroads_macros_security import make_random_string
 from os.path import expandvars
+
+from .constants import SECRET_LENGTH
 
 
 L = get_log(__name__)
@@ -25,7 +28,14 @@ def set_default(settings, key, default, parse=None):
     return value
 
 
-def expand_environment_variables(settings):
-    return {
-        k: expandvars(v) if isinstance(v, str) else v
-        for k, v in settings.items()}
+def fill_environment_variables(settings):
+    for k, v in settings.items():
+        if not isinstance(v, str):
+            continue
+        settings[k] = expandvars(v)
+
+
+def fill_secrets(settings, secret_length=SECRET_LENGTH):
+    for k, v in settings.items():
+        if k.endswith('.secret') and not v:
+            settings[k] = make_random_string(secret_length)
