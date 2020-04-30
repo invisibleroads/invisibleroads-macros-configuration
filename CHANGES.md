@@ -1,3 +1,3 @@
 # 1.0
-- Add expand_environment_variables
+- Add fill_environment_variables, fill_secrets
 - Restore set_default
