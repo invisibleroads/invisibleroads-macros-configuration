@@ -30,19 +30,17 @@ def set_default(settings, key, default, parse=None):
 
 
 def fill_environment_variables(settings):
-    return {
-        k: expandvars(v)
-        if isinstance(v, str) else v
-        for k, v in settings.items()
-    }
+    for k, v in settings.items():
+        if not isinstance(v, str):
+            continue
+        settings[k] = expandvars(v)
 
 
 def fill_secrets(settings, secret_length=SECRET_LENGTH):
-    return {
-        k: make_random_string(secret_length)
-        if k.endswith('.secret') and not v else v
-        for k, v in settings.items()
-    }
+    for k, v in settings.items():
+        if v or not k.endswith('.secret'):
+            continue
+        settings[k] = make_random_string(secret_length)
 
 
 def fill_extensions(settings):
@@ -56,8 +54,7 @@ def fill_extensions(settings):
             extensions.append(getattr(module, extension_name))
         return extensions
 
-    return {
-        k: load_extensions(v.split())
-        if k.endswith('.extensions') else v
-        for k, v in settings.items()
-    }
+    for k, v in settings.items():
+        if not k.endswith('.extensions'):
+            continue
+        settings[k] = load_extensions(v.split())
