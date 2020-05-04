@@ -23,7 +23,7 @@ DESCRIPTION = '\n\n'.join(open(join(FOLDER, x)).read().strip() for x in [
 
 setup(
     name='invisibleroads-macros-configuration',
-    version='1.0.3',
+    version='1.0.4',
     description='Shortcut functions for configuration operations',
     long_description=DESCRIPTION,
     long_description_content_type='text/markdown',
