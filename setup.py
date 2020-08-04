@@ -9,8 +9,8 @@ APP_CLASSIFIERS = [
     'License :: OSI Approved :: MIT License',
 ]
 APP_REQUIREMENTS = [
-    'invisibleroads-macros-log >= 1.0.2',
-    'invisibleroads-macros-security >= 1.0.0',
+    'invisibleroads-macros-log >= 1.0.3',
+    'invisibleroads-macros-security >= 1.0.1',
 ]
 TEST_REQUIREMENTS = [
     'pytest',
