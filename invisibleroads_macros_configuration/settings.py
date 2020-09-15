@@ -46,15 +46,15 @@ def fill_secrets(settings, secret_length=SECRET_LENGTH):
 def fill_extensions(settings):
 
     def load_extensions(extension_specs):
-        extensions = []
-        for extension_spec in extension_specs:
-            module_spec, extension_name = extension_spec.rsplit(
-                '.', maxsplit=1)
-            module = import_module(module_spec)
-            extensions.append(getattr(module, extension_name))
-        return extensions
+        return [resolve_attribute(_) for _ in extension_specs]
 
     for k, v in settings.items():
         if not k.endswith('.extensions'):
             continue
         settings[k] = load_extensions(v.split())
+
+
+def resolve_attribute(attribute_spec):
+    module_spec, attribute_name = attribute_spec.rsplit('.', maxsplit=1)
+    module = import_module(module_spec)
+    return getattr(module, attribute_name)
