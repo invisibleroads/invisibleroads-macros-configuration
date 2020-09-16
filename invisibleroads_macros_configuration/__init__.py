@@ -4,9 +4,11 @@ from .settings import (
     fill_environment_variables,
     fill_extensions,
     fill_secrets,
-    resolve_attribute,
     set_default)
-from .formats import load_json
+from .formats import (
+    load_attributes,
+    load_attribute,
+    load_json)
 
 
 # flake8: noqa: E401

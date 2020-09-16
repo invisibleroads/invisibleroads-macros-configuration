@@ -1,9 +1,9 @@
-from importlib import import_module
 from invisibleroads_macros_log import get_log
 from invisibleroads_macros_security import make_random_string
 from os.path import expandvars
 
 from .constants import SECRET_LENGTH
+from .formats import load_attributes
 
 
 L = get_log(__name__)
@@ -44,17 +44,7 @@ def fill_secrets(settings, secret_length=SECRET_LENGTH):
 
 
 def fill_extensions(settings):
-
-    def load_extensions(extension_specs):
-        return [resolve_attribute(_) for _ in extension_specs]
-
     for k, v in settings.items():
         if not k.endswith('.extensions'):
             continue
-        settings[k] = load_extensions(v.split())
-
-
-def resolve_attribute(attribute_spec):
-    module_spec, attribute_name = attribute_spec.rsplit('.', maxsplit=1)
-    module = import_module(module_spec)
-    return getattr(module, attribute_name)
+        settings[k] = load_attributes(v)
