@@ -36,7 +36,7 @@ setup(
     keywords='invisibleroads',
     packages=find_packages(),
     include_package_data=True,
-    zip_safe=False,
+    zip_safe=True,
     extras_require={'test': TEST_REQUIREMENTS},
     install_requires=APP_REQUIREMENTS,
     entry_points=ENTRY_POINTS)
